@@ -2,7 +2,8 @@ from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import pyqtSlot
 from design import Ui_MainWindow
 import sys
-from counter import count_repeated, InvalidLengthException
+from counter import Counter, InvalidLengthException
+from validator import LengthValidator
             
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -15,7 +16,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def on_click(self):
         text = self.sourceText.toPlainText()
         try:
-            self.targetText.setPlainText(count_repeated(text))
+            validator = LengthValidator(30)
+            counter = Counter(validator)
+            self.targetText.setPlainText(counter.count_repeated(text))
         except InvalidLengthException:
             self.targetText.setPlainText("длина строки не должна превышать 30 символов")
  
